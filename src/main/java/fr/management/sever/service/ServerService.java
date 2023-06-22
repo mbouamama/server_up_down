@@ -14,7 +14,7 @@ public interface ServerService {
 
     Collection<Server> list(int limit);
 
-    Server get(Server server);
+    Server get(Long id);
 
     Server update(Server server);
 
