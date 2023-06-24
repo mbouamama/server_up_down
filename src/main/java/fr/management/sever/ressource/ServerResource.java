@@ -3,7 +3,6 @@ package fr.management.sever.ressource;
 import fr.management.sever.enumeration.Status;
 import fr.management.sever.model.Response;
 import fr.management.sever.model.Server;
-import fr.management.sever.service.ServerService;
 import fr.management.sever.service.implementation.ServerServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,10 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Map;
 
-import static java.time.LocalDateTime.*;
+import static java.time.LocalDateTime.now;
 import static java.util.Map.of;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
@@ -24,6 +21,7 @@ import static org.springframework.http.HttpStatus.OK;
 @RequiredArgsConstructor
 public class ServerResource {
     private final ServerServiceImpl serverService;
+
     @GetMapping("/list")
     public ResponseEntity<Response> getServers() {
         return ResponseEntity.ok(
@@ -44,8 +42,8 @@ public class ServerResource {
         return ResponseEntity.ok(
                 Response.builder()
                         .timestamp(now())
-                        .data(of("servers", server ))
-                        .message(server.getStatus()  == Status.SERVER_UP ? "Ping success" : "Ping failed")
+                        .data(of("servers", server))
+                        .message(server.getStatus() == Status.SERVER_UP ? "Ping success" : "Ping failed")
                         .status(OK)
                         .statusCode(OK.value())
                         .build()
@@ -53,12 +51,12 @@ public class ServerResource {
         );
     }
 
-    @PutMapping("/save}")
+    @PostMapping("/save}")
     public ResponseEntity<Response> saveServer(@RequestBody @Valid Server server) throws IOException {
-         return ResponseEntity.ok(
+        return ResponseEntity.ok(
                 Response.builder()
                         .timestamp(now())
-                        .data(of("server", serverService.create(server) ))
+                        .data(of("server", serverService.create(server)))
                         .message("server created")
                         .status(CREATED)
                         .statusCode(CREATED.value())
