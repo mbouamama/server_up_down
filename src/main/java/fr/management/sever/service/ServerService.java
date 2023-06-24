@@ -10,7 +10,7 @@ public interface ServerService {
 
     Server create(Server server);
 
-    Server ping(String ipAddress) throws IOException;
+     Server ping(String ipAddress) throws IOException;
 
     Collection<Server> list(int limit);
 
