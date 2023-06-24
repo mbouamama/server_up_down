@@ -63,4 +63,18 @@ public class ServerResource {
                         .build()
         );
     }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<Response> getServer(@PathVariable("id") Long id) throws IOException {
+        return ResponseEntity.ok(
+                Response.builder()
+                        .timestamp(now())
+                        .data(of("servers", serverService.get(id)))
+                        .message("Server Retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+
+        );
+    }
 }
